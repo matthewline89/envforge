@@ -36,6 +36,10 @@ def run_cmd(
     if len(snapshots) < 2:
         raise click.UsageError("Provide at least two snapshot names to merge.")
 
+    # Detect duplicate snapshot names early to avoid confusing merge results.
+    if len(set(snapshots)) != len(snapshots):
+        raise click.UsageError("Duplicate snapshot names are not allowed.")
+
     try:
         result = merge_snapshots(list(snapshots), directory, strategy=strategy)
     except FileNotFoundError as exc:
