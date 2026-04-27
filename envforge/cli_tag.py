@@ -65,3 +65,19 @@ def resolve_cmd(tag: str, snapshot_dir: str) -> None:
         click.echo(f"Tag '{tag}' not found.", err=True)
         raise SystemExit(1)
     click.echo(name)
+
+
+@tag_group.command(name="rename")
+@click.argument("old_tag")
+@click.argument("new_tag")
+@click.option("--dir", "snapshot_dir", default=str(DEFAULT_SNAPSHOT_DIR), show_default=True)
+def rename_cmd(old_tag: str, new_tag: str, snapshot_dir: str) -> None:
+    """Rename OLD_TAG to NEW_TAG, preserving the snapshot it points to."""
+    sdir = Path(snapshot_dir)
+    name = tag_mod.resolve_tag(sdir, old_tag)
+    if name is None:
+        click.echo(f"Tag '{old_tag}' not found.", err=True)
+        raise SystemExit(1)
+    tag_mod.remove_tag(sdir, old_tag)
+    tag_mod.add_tag(sdir, new_tag, name)
+    click.echo(f"Renamed tag '{old_tag}' to '{new_tag}'.")
