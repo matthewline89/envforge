@@ -44,7 +44,24 @@ def run_cmd(snapshots: tuple, snapshot_dir: str, only_diff: bool) -> None:
         click.echo("No differences found.")
         return
 
-    # Header
+    _print_table(report, keys_to_show)
+
+    # Summary footer
+    click.echo()
+    click.echo(
+        f"Common keys: {len(report.common_keys())}  "
+        f"Differing: {len(report.differing_keys())}  "
+        f"Total: {len(report.all_keys())}"
+    )
+
+
+def _print_table(report, keys_to_show) -> None:
+    """Render the comparison table to stdout.
+
+    Args:
+        report: A ``CompareReport`` instance containing the comparison matrix.
+        keys_to_show: Iterable of key names to include in the table output.
+    """
     col_w = 28
     header = f"{'KEY':<30}" + "".join(f"{n:<{col_w}}" for n in report.snapshot_names)
     click.echo(header)
@@ -57,11 +74,3 @@ def run_cmd(snapshots: tuple, snapshot_dir: str, only_diff: bool) -> None:
             display = val if val is not None else "<missing>"
             row += f"{display:<{col_w}}"
         click.echo(row)
-
-    # Summary footer
-    click.echo()
-    click.echo(
-        f"Common keys: {len(report.common_keys())}  "
-        f"Differing: {len(report.differing_keys())}  "
-        f"Total: {len(report.all_keys())}"
-    )
