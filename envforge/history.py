@@ -73,3 +73,22 @@ def clear_history(snapshot_dir: Path, snapshot_name: Optional[str] = None) -> in
     removed = len(entries) - len(kept)
     _save_history(snapshot_dir, kept)
     return removed
+
+
+def get_last_event(
+    snapshot_dir: Path,
+    snapshot_name: str,
+    action: Optional[str] = None,
+) -> Optional[dict]:
+    """Return the most recent history entry for a given snapshot.
+
+    Args:
+        snapshot_dir: Directory where the history file is stored.
+        snapshot_name: Name of the snapshot to look up.
+        action: If provided, restrict to entries with this action type.
+
+    Returns:
+        The most recent matching entry, or ``None`` if no entries exist.
+    """
+    entries = get_history(snapshot_dir, snapshot_name=snapshot_name, action=action)
+    return entries[-1] if entries else None
