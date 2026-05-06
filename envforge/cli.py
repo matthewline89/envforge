@@ -1,5 +1,4 @@
-"""Main CLI entry point for envforge."""
-
+"""Root CLI entry-point for envforge."""
 from __future__ import annotations
 
 import click
@@ -21,9 +20,16 @@ from envforge.cli_audit import audit_group
 from envforge.cli_validate import validate_group
 from envforge.cli_rename import rename_group
 from envforge.cli_clone import clone_group
-from envforge.cli_schedule import schedule_group
 from envforge.cli_archive import archive_group
 from envforge.cli_lock import lock_group
+from envforge.cli_annotate import annotate_group
+from envforge.cli_namespace import namespace_group
+from envforge.cli_group import group_group
+from envforge.cli_bookmark import bookmark_group
+from envforge.cli_pipeline import pipeline_group
+from envforge.cli_schedule import schedule_group
+from envforge.cli_trigger import trigger_group
+from envforge.cli_label import label_group
 
 
 @click.group()
@@ -49,6 +55,13 @@ cli.add_command(audit_group)
 cli.add_command(validate_group)
 cli.add_command(rename_group)
 cli.add_command(clone_group)
-cli.add_command(schedule_group)
 cli.add_command(archive_group)
 cli.add_command(lock_group)
+cli.add_command(annotate_group)
+cli.add_command(namespace_group)
+cli.add_command(group_group)
+cli.add_command(bookmark_group)
+cli.add_command(pipeline_group)
+cli.add_command(schedule_group)
+cli.add_command(trigger_group)
+cli.add_command(label_group)
