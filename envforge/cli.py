@@ -1,4 +1,4 @@
-"""Root CLI entry-point for envforge."""
+"""Root CLI for envforge."""
 from __future__ import annotations
 
 import click
@@ -15,6 +15,12 @@ from envforge.cli_encrypt import encrypt_group
 from envforge.cli_alias import alias_group
 from envforge.cli_watch import watch_group
 from envforge.cli_pin import pin_group
+from envforge.cli_export import export_group
+from envforge.cli_audit import audit_group
+from envforge.cli_validate import validate_group
+from envforge.cli_rename import rename_group
+from envforge.cli_clone import clone_group
+from envforge.cli_schedule import schedule_group
 
 
 @click.group()
@@ -35,3 +41,9 @@ cli.add_command(encrypt_group)
 cli.add_command(alias_group)
 cli.add_command(watch_group)
 cli.add_command(pin_group)
+cli.add_command(export_group)
+cli.add_command(audit_group)
+cli.add_command(validate_group)
+cli.add_command(rename_group)
+cli.add_command(clone_group)
+cli.add_command(schedule_group)
