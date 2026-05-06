@@ -1,4 +1,5 @@
-"""Root CLI for envforge."""
+"""Main CLI entry point for envforge."""
+
 from __future__ import annotations
 
 import click
@@ -21,6 +22,8 @@ from envforge.cli_validate import validate_group
 from envforge.cli_rename import rename_group
 from envforge.cli_clone import clone_group
 from envforge.cli_schedule import schedule_group
+from envforge.cli_archive import archive_group
+from envforge.cli_lock import lock_group
 
 
 @click.group()
@@ -47,3 +50,5 @@ cli.add_command(validate_group)
 cli.add_command(rename_group)
 cli.add_command(clone_group)
 cli.add_command(schedule_group)
+cli.add_command(archive_group)
+cli.add_command(lock_group)
