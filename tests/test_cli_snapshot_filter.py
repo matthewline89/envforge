@@ -23,6 +23,7 @@ def snap_dir(tmp_path: Path) -> Path:
 
 
 def _write(snap_dir: Path, name: str, env: dict[str, str]) -> None:
+    """Write a snapshot JSON file to *snap_dir* with the given *name* and *env* mapping."""
     (snap_dir / f"{name}.json").write_text(json.dumps(env))
 
 
@@ -73,3 +74,13 @@ def test_by_size_cmd_no_match_message(runner: CliRunner, snap_dir: Path) -> None
     _write(snap_dir, "tiny", {"A": "1"})
     result = runner.invoke(filter_group, ["by-size", "--min", "10", "--dir", str(snap_dir)])
     assert "No snapshots matched" in result.output
+
+
+def test_by_size_cmd_max_filter(runner: CliRunner, snap_dir: Path) -> None:
+    """Snapshots with more keys than --max should be excluded from results."""
+    _write(snap_dir, "big", {"A": "1", "B": "2", "C": "3"})
+    _write(snap_dir, "small", {"A": "1"})
+    result = runner.invoke(filter_group, ["by-size", "--max", "2", "--dir", str(snap_dir)])
+    assert result.exit_code == 0
+    assert "small" in result.output
+    assert "big" not in result.output
