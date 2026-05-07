@@ -53,6 +53,12 @@ def run_cmd(
 ) -> None:
     """Validate snapshot NAME and report issues."""
     snap_path = Path(snapshot_dir)
+
+    if not snap_path.is_dir():
+        raise click.ClickException(
+            f"Snapshot directory '{snapshot_dir}' does not exist or is not a directory."
+        )
+
     try:
         report = validate_snapshot(
             snap_path,
